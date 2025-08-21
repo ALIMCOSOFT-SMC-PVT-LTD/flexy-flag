@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Coverage reports
+coverage/
+
+# Logs
+*.log
+
+# Package files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Documentation that should not be formatted
+CHANGELOG.md
+LICENSE
+
+# Generated files
+*.min.js
+*.min.css
