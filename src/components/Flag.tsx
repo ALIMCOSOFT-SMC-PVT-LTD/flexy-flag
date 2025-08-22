@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FlagProps } from '../types';
-import { getFlagSvgSync, getCountryByCode } from '../utils/flagUtils';
+import { getFlagSvg, getCountryByCode } from '../utils/flagUtils';
 
 export const Flag: React.FC<FlagProps> = ({
   code,
@@ -17,9 +17,25 @@ export const Flag: React.FC<FlagProps> = ({
   title,
   ...props
 }) => {
-  // Simplified version without hooks for testing
-  const isVisible = !lazy; // Always visible for now
-  const hasError = false; // No error handling for now
+  const [svgContent, setSvgContent] = useState<string | null>(null);
+  const [hasError, setHasError] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isVisible, setIsVisible] = useState(!lazy);
+
+  // Load SVG content asynchronously
+  useEffect(() => {
+    if (isVisible) {
+      getFlagSvg(code.toLowerCase())
+        .then(svg => {
+          setSvgContent(svg);
+          setHasError(false);
+        })
+        .catch(() => {
+          setHasError(true);
+          setSvgContent(null);
+        });
+    }
+  }, [code, isVisible]);
 
   // Calculate dimensions and styles
   // Note: ratio parsing for future use
@@ -28,25 +44,33 @@ export const Flag: React.FC<FlagProps> = ({
   let flagStyles: React.CSSProperties = {
     display: 'inline-block',
     overflow: 'hidden',
-    aspectRatio: ratio,
+    lineHeight: 0, // Prevent extra spacing around SVG
+    position: 'relative', // Help with scaling
   };
 
-  // Handle sizing
+  // Handle sizing - be more explicit about dimensions
   if (width) {
     flagStyles.width = width;
   } else if (size) {
     if (shape === 'circle' || shape === 'square') {
       flagStyles.width = size;
       flagStyles.height = size;
+      flagStyles.aspectRatio = '1';
     } else {
       flagStyles.width = size;
+      flagStyles.aspectRatio = ratio;
     }
   } else {
     flagStyles.width = '100%';
+    flagStyles.aspectRatio = ratio;
   }
 
   if (height && shape !== 'circle' && shape !== 'square') {
     flagStyles.height = height;
+    // If both width/size and height are specified, don't use aspectRatio
+    if (width || size) {
+      delete flagStyles.aspectRatio;
+    }
   }
 
   // Handle shapes
@@ -66,6 +90,7 @@ export const Flag: React.FC<FlagProps> = ({
       break;
     case 'rectangle':
     default:
+      // Keep the aspect ratio already set above
       break;
   }
 
@@ -93,22 +118,9 @@ export const Flag: React.FC<FlagProps> = ({
   // Get country metadata for accessibility and fallbacks
   const country = getCountryByCode(code.toLowerCase());
 
-  /**
-   * Load SVG content and handle errors gracefully.
-   */
-  let svgContent: string | null = null;
-
-  if (isVisible) {
-    try {
-      svgContent = getFlagSvgSync(code.toLowerCase());
-    } catch (error) {
-      // Set error state for fallback handling
-      // Flag not found for country code: ${code}
-    }
-  }
-
-  // Handle fallbacks
+  // Handle fallbacks - prioritize SVG over emoji
   if (hasError || !svgContent) {
+    // Only use emoji as a last resort if explicitly requested
     if (fallback === 'emoji' && country?.emoji) {
       return (
         <span
@@ -123,24 +135,60 @@ export const Flag: React.FC<FlagProps> = ({
         </span>
       );
     }
+    // Return null instead of emoji for better SVG experience
     return null;
   }
 
   // SVG optimization for different shapes
   let optimizedSvg = svgContent;
 
-  // Ensure proper viewBox for the aspect ratio
-  const [ratioW, ratioH] = ratio.split(':').map(Number);
-  optimizedSvg = optimizedSvg.replace(
-    /viewBox="[^"]*"/,
-    `viewBox="0 0 ${ratioW * 100} ${ratioH * 100}"`
-  );
+  // Keep the original viewBox but ensure it's preserved - don't change it
+  // The original SVG viewBox is designed to show the complete flag
+  // Don't modify the viewBox as it's already correct for the flag design
 
-  // Add preserveAspectRatio for better scaling
+  // Add preserveAspectRatio for proper scaling
+  // Use 'none' for most flags, but preserve aspect ratio for flags with strokes
+  let preserveAspectRatio = 'none';
+
+  // For circles, use slice to crop properly
+  if (shape === 'circle') {
+    preserveAspectRatio = 'xMidYMid slice';
+  }
+
+  // For flags that use strokes (like US flag), preserve aspect ratio to maintain stroke width
+  if (optimizedSvg.includes('stroke=')) {
+    preserveAspectRatio =
+      shape === 'circle' ? 'xMidYMid slice' : 'xMidYMid meet';
+  }
+
   if (!optimizedSvg.includes('preserveAspectRatio')) {
     optimizedSvg = optimizedSvg.replace(
       '<svg',
-      '<svg preserveAspectRatio="xMidYMid slice"'
+      `<svg preserveAspectRatio="${preserveAspectRatio}"`
+    );
+  } else {
+    // Replace existing preserveAspectRatio
+    optimizedSvg = optimizedSvg.replace(
+      /preserveAspectRatio="[^"]*"/g,
+      `preserveAspectRatio="${preserveAspectRatio}"`
+    );
+  }
+
+  // Ensure SVG scales properly to fill container
+  // Remove any existing width/height attributes and add responsive ones
+  optimizedSvg = optimizedSvg.replace(/width="[^"]*"/g, '');
+  optimizedSvg = optimizedSvg.replace(/height="[^"]*"/g, '');
+  optimizedSvg = optimizedSvg.replace(
+    '<svg',
+    '<svg width="100%" height="100%"'
+  );
+
+  // For SVGs with strokes, ensure strokes scale proportionally
+  if (optimizedSvg.includes('stroke=')) {
+    // Add vector-effect to maintain stroke proportions during scaling
+    optimizedSvg = optimizedSvg.replace(
+      /stroke="/g,
+      'vector-effect="non-scaling-stroke" stroke="'
     );
   }
 

@@ -1,31 +1,31 @@
 /**
- * Dynamic flag SVG loader utility.
+ * Static flag SVG loader utility.
  *
- * This module handles loading SVG flags from the assets directory.
- * SVGs are loaded dynamically to enable tree-shaking and reduce bundle size.
+ * This module handles loading SVG flags from statically imported assets.
+ * All SVGs are bundled with the library for reliable access.
  *
  * @internal
  */
 
+import { getStaticSvg } from './staticSvgMap';
+
 /**
- * Cache for loaded SVG content to avoid multiple file reads.
+ * Cache for loaded SVG content to avoid multiple lookups.
  */
 const svgCache = new Map<string, string>();
 
 /**
- * Dynamically imports an SVG flag file.
+ * Gets an SVG flag from static imports.
  *
  * @param countryCode - ISO 3166-1 alpha-2 country code in lowercase.
  * @returns Promise that resolves to SVG content string.
  */
 async function importSvgFlag(countryCode: string): Promise<string> {
-  try {
-    // Dynamic import of SVG file
-    const svgModule = await import(`../assets/flags/${countryCode}.svg`);
-    return svgModule.default;
-  } catch (error) {
-    throw new Error(`SVG flag not found for country code: ${countryCode}`);
+  const svg = getStaticSvg(countryCode);
+  if (svg) {
+    return svg;
   }
+  throw new Error(`SVG flag not found for country code: ${countryCode}`);
 }
 
 /**

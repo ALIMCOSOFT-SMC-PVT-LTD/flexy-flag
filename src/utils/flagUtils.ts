@@ -3,90 +3,6 @@ import { Country } from '../types';
 import { loadFlagSvg } from './flagLoader';
 
 /**
- * Collection of high-quality SVG flag definitions for common countries.
- *
- * These are embedded directly for performance and to avoid external dependencies.
- * In a production environment, you might consider loading these from a CDN
- * or external asset files for better caching and reduced bundle size.
- *
- * @internal
- */
-const simpleFlagSvgs: Record<string, string> = {
-  us: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
-    <rect width="300" height="200" fill="#B22234"/>
-    <rect y="15" width="300" height="15" fill="#FFFFFF"/>
-    <rect y="46" width="300" height="15" fill="#FFFFFF"/>
-    <rect y="77" width="300" height="15" fill="#FFFFFF"/>
-    <rect y="108" width="300" height="15" fill="#FFFFFF"/>
-    <rect y="138" width="300" height="15" fill="#FFFFFF"/>
-    <rect y="169" width="300" height="15" fill="#FFFFFF"/>
-    <rect width="120" height="105" fill="#3C3B6E"/>
-  </svg>`,
-  gb: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
-    <rect width="300" height="200" fill="#012169"/>
-    <path d="M0,0 L300,200 M300,0 L0,200" stroke="#FFFFFF" stroke-width="20"/>
-    <path d="M150,0 L150,200 M0,100 L300,100" stroke="#FFFFFF" stroke-width="40"/>
-    <path d="M0,0 L300,200 M300,0 L0,200" stroke="#C8102E" stroke-width="12"/>
-    <path d="M150,0 L150,200 M0,100 L300,100" stroke="#C8102E" stroke-width="24"/>
-  </svg>`,
-  ca: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
-    <rect width="300" height="200" fill="#FFFFFF"/>
-    <rect width="75" height="200" fill="#FF0000"/>
-    <rect x="225" width="75" height="200" fill="#FF0000"/>
-    <path d="M150,50 L130,80 L140,80 L120,100 L140,100 L150,150 L160,100 L180,100 L160,80 L170,80 Z" fill="#FF0000"/>
-  </svg>`,
-  de: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
-    <rect width="300" height="67" fill="#000000"/>
-    <rect y="67" width="300" height="66" fill="#DD0000"/>
-    <rect y="133" width="300" height="67" fill="#FFCE00"/>
-  </svg>`,
-  fr: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
-    <rect width="100" height="200" fill="#002654"/>
-    <rect x="100" width="100" height="200" fill="#FFFFFF"/>
-    <rect x="200" width="100" height="200" fill="#CE1126"/>
-  </svg>`,
-  jp: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
-    <rect width="300" height="200" fill="#FFFFFF"/>
-    <circle cx="150" cy="100" r="60" fill="#BC002D"/>
-  </svg>`,
-  in: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
-    <rect width="300" height="67" fill="#FF9933"/>
-    <rect y="67" width="300" height="66" fill="#FFFFFF"/>
-    <rect y="133" width="300" height="67" fill="#138808"/>
-    <circle cx="150" cy="100" r="20" fill="none" stroke="#000080" stroke-width="2"/>
-    <g stroke="#000080" stroke-width="1">
-      <line x1="130" y1="100" x2="170" y2="100"/>
-      <line x1="150" y1="80" x2="150" y2="120"/>
-    </g>
-  </svg>`,
-  br: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
-    <rect width="300" height="200" fill="#009639"/>
-    <path d="M30,100 L150,40 L270,100 L150,160 Z" fill="#FEDF00"/>
-    <circle cx="150" cy="100" r="35" fill="#002776"/>
-  </svg>`,
-  au: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
-    <rect width="300" height="200" fill="#012169"/>
-    <rect width="120" height="100" fill="#012169"/>
-    <path d="M0,0 L120,100 M120,0 L0,100" stroke="#FFFFFF" stroke-width="8"/>
-    <path d="M60,0 L60,100 M0,50 L120,50" stroke="#FFFFFF" stroke-width="16"/>
-    <path d="M0,0 L120,100 M120,0 L0,100" stroke="#C8102E" stroke-width="5"/>
-    <path d="M60,0 L60,100 M0,50 L120,50" stroke="#C8102E" stroke-width="10"/>
-    <g fill="#FFFFFF">
-      <polygon points="190,30 195,45 210,45 198,55 203,70 190,60 177,70 182,55 170,45 185,45"/>
-      <polygon points="220,80 223,87 232,87 225,92 228,99 220,94 212,99 215,92 208,87 217,87"/>
-      <polygon points="250,120 253,127 262,127 255,132 258,139 250,134 242,139 245,132 238,127 247,127"/>
-      <polygon points="180,140 183,147 192,147 185,152 188,159 180,154 172,159 175,152 168,147 177,147"/>
-      <polygon points="240,60 243,67 252,67 245,72 248,79 240,74 232,79 235,72 228,67 237,67"/>
-    </g>
-  </svg>`,
-  ch: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-    <rect width="200" height="200" fill="#FF0000"/>
-    <rect x="65" y="40" width="70" height="120" fill="#FFFFFF"/>
-    <rect x="40" y="65" width="120" height="70" fill="#FFFFFF"/>
-  </svg>`,
-};
-
-/**
  * Retrieves the complete list of all available countries with their metadata.
  *
  * This function returns all countries supported by the flexi-flags package,
@@ -184,9 +100,10 @@ export function getCountryByName(name: string): Country | undefined {
  * @public
  */
 export function flagExists(code: string): boolean {
-  return (
-    code.toLowerCase() in simpleFlagSvgs ||
-    countries.some(country => country.iso.toLowerCase() === code.toLowerCase())
+  // A flag exists if the country exists in our database
+  // Real SVGs will be loaded from assets, placeholders generated for missing ones
+  return countries.some(
+    country => country.iso.toLowerCase() === code.toLowerCase()
   );
 }
 
@@ -233,25 +150,20 @@ export async function getFlagSvg(code: string): Promise<string> {
 /**
  * Synchronous version of getFlagSvg for backward compatibility.
  *
- * Uses embedded SVGs for common countries, generates placeholders for others.
- * For production use with actual SVG files, use the async getFlagSvg instead.
+ * Generates colorful placeholders for all countries since all real SVGs
+ * are now loaded via the async getFlagSvg function.
  *
  * @param code - ISO 3166-1 alpha-2 country code.
- * @returns SVG markup string for the flag.
+ * @returns SVG markup string for a placeholder flag.
  * @throws Error when country code is invalid or not supported.
  *
  * @public
- * @deprecated Use getFlagSvg (async version) for better performance with real SVG files.
+ * @deprecated Use getFlagSvg (async version) for real SVG flags from assets.
  */
 export function getFlagSvgSync(code: string): string {
   const lowerCode = code.toLowerCase();
 
-  // Return embedded SVG if available
-  if (simpleFlagSvgs[lowerCode]) {
-    return simpleFlagSvgs[lowerCode];
-  }
-
-  // Generate a placeholder SVG if country exists
+  // For now, we'll generate a placeholder - the async version handles real SVGs
   const country = getCountryByCode(lowerCode);
   if (country) {
     const colors = [

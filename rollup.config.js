@@ -1,6 +1,7 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
+import { string } from 'rollup-plugin-string';
 import dts from 'rollup-plugin-dts';
 import copy from 'rollup-plugin-copy';
 import { readFileSync } from 'fs';
@@ -29,6 +30,9 @@ export default [
       commonjs({
         include: /node_modules/,
         exclude: ['react', 'react-dom'],
+      }),
+      string({
+        include: ['**/*.svg'],
       }),
       typescript({
         tsconfig: './tsconfig.json',

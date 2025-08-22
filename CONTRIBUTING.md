@@ -55,6 +55,31 @@ By participating in this project, you agree to abide by our Code of Conduct. Be 
 - `npm run typecheck` - Check TypeScript types
 - `npm run validate` - Run all checks (lint, format, typecheck, test)
 
+### Build System
+
+The project uses **Rollup** with the following key plugins:
+
+- **rollup-plugin-string**: Converts SVG files to string imports
+- **@rollup/plugin-typescript**: TypeScript compilation
+- **rollup-plugin-copy**: Copies assets to dist folder
+
+### Key Technical Components
+
+1. **Static SVG Imports** (`src/utils/staticSvgMap.ts`):
+   - Auto-generated file mapping country codes to imported SVG content
+   - Created by `generate-svg-imports.js` script
+   - Enables reliable SVG access across all bundle environments
+
+2. **Smart SVG Optimization** (`src/components/Flag.tsx`):
+   - Automatic `preserveAspectRatio` selection based on SVG content
+   - Stroke detection for flags with line-based elements (USA, etc.)
+   - Dynamic viewBox preservation from authentic sources
+
+3. **Fallback System**:
+   - Primary: Static imported SVGs from assets
+   - Secondary: Async loading via `flagLoader.ts`
+   - Tertiary: Generated placeholder SVGs
+
 ## Coding Standards
 
 ### TypeScript
@@ -102,11 +127,18 @@ export function myFunction(paramName: string): ReturnType {
 
 ```
 src/
-├── components/     # React components
-├── types/          # TypeScript type definitions
-├── utils/          # Utility functions
-├── data/           # Static data files
-└── __tests__/      # Test files (co-located with source)
+├── components/          # React components
+│   └── Flag.tsx        # Main Flag component with smart SVG optimization
+├── types/              # TypeScript type definitions
+├── utils/              # Utility functions
+│   ├── flagUtils.ts    # Country search, validation utilities
+│   ├── flagLoader.ts   # Async SVG loading (fallback)
+│   └── staticSvgMap.ts # Static SVG imports (auto-generated)
+├── data/               # Static country data
+│   └── countries.ts    # ISO country codes and metadata
+├── assets/             # SVG flag assets
+│   └── flags/          # 272+ authentic SVG flag files
+└── __tests__/          # Test files (co-located with source)
 ```
 
 ## Commit Convention
@@ -225,39 +257,51 @@ describe('Flag Component', () => {
 
 ## Adding New Flags
 
-### High-Quality SVG Flags
+### Real SVG Flag Assets
 
-To add a new high-quality SVG flag:
+To add a new authentic SVG flag:
 
-1. **Add SVG to `simpleFlagSvgs`** in `src/utils/flagUtils.ts`:
+1. **Add SVG file** to `src/assets/flags/`:
 
-   ```typescript
-   const simpleFlagSvgs: Record<string, string> = {
-     // ... existing flags
-     newcountry: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
-       <!-- SVG content -->
-     </svg>`,
-   };
+   ```bash
+   # Add the new flag SVG file
+   src/assets/flags/new-country.svg
    ```
 
-2. **Follow SVG guidelines**:
-   - Use `viewBox="0 0 300 200"` for consistency
-   - Use proper aspect ratios
-   - Optimize SVG code (remove unnecessary elements)
-   - Use web-safe colors
-   - Ensure accessibility
+2. **Regenerate static imports**:
 
-3. **Add tests** for the new flag:
+   ```bash
+   # Run the generation script to update staticSvgMap.ts
+   node generate-svg-imports.js
+   npm run build
+   ```
+
+3. **Follow SVG guidelines**:
+   - Use authentic, high-quality flag designs
+   - Maintain original viewBox from source
+   - Keep authentic colors (don't modify official flag colors)
+   - Use web-safe SVG elements
+   - Ensure proper accessibility attributes
+
+4. **Test the new flag**:
    ```typescript
    test('renders NewCountry flag correctly', () => {
      render(<Flag code="NC" />);
-     expect(screen.getByRole('img')).toBeInTheDocument();
+     const flagElement = screen.getByRole('img');
+     expect(flagElement).toBeInTheDocument();
+     expect(flagElement).toHaveClass('flexi-flag--nc');
    });
    ```
 
 ### Country Data
 
-Country data is automatically included if the ISO code exists in `src/data/countries.ts`. Placeholder flags are generated automatically for countries without custom SVGs.
+Country data is automatically included if the ISO code exists in `src/data/countries.ts`. The component automatically loads SVG files from `src/assets/flags/` and generates placeholders for countries without SVG files.
+
+### SVG Optimization Notes
+
+- **Preserve Original ViewBox**: Don't modify viewBox dimensions from authentic sources
+- **Stroke-Based Flags**: Flags using `stroke` attributes (like USA stripes) are automatically detected and handled
+- **Static Imports**: All SVGs are statically imported for reliable bundling across environments
 
 ## Issue Reporting
 

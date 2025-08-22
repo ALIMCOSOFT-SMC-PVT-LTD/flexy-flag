@@ -2,21 +2,28 @@
 
 [![npm version](https://badge.fury.io/js/flexi-flags.svg)](https://badge.fury.io/js/flexi-flags) [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Downloads](https://img.shields.io/npm/dw/flexi-flags.svg)](https://www.npmjs.com/package/flexi-flags)
 
-A modern, flexible NPM package for displaying country flags in SVG format. Supports all 195 UN countries plus extras like EU, UN, and Kosovo. Key differentiators include customizable shapes (rectangle, square, circle, rounded, pill), aspect ratios, sizes, and styles.
+A modern, flexible React component library for displaying country flags using authentic, high-quality SVG assets. Features 272+ real flag designs with intelligent scaling, shape transformations, and perfect rendering across all container sizes.
 
-Unlike other packages (e.g., `country-flag-icons` or `react-country-flag`), Flexi-Flags offers easy shape transformations, tree-shaking, lazy loading support, and built-in accessibility.
+**Key differentiators:**
+
+- ✅ **Real SVG Assets**: Authentic flag designs with accurate colors (not simplified recreations)
+- ✅ **Smart Scaling**: Flags automatically scale to fill containers perfectly without cropping
+- ✅ **Stroke-Aware**: Special handling for flags with stripes (like USA) to preserve visual accuracy
+- ✅ **Shape Flexibility**: Circle, square, rounded, pill shapes with optimized rendering
+- ✅ **Bundle Optimized**: Static SVG imports for reliable cross-platform compatibility
 
 ## Features
 
-- **Comprehensive Coverage**: 250+ flags based on ISO 3166-1, sourced from high-quality SVGs
-- **Flexible Shapes**: Rectangle, square, circle, rounded, pill
-- **Custom Aspect Ratios**: 1:1, 3:2, 4:3, or any custom ratio
-- **Any Size**: Prop-based sizing (e.g., `24px`, `2em`) or full-width
-- **Styling Freedom**: Borders, shadows, animations, color overrides
-- **Performance**: Tree-shakable, lazy loading via IntersectionObserver
-- **Accessibility**: Built-in `aria-label`, `title`, and role attributes
-- **SSR-Safe**: Works perfectly with Next.js and other SSR frameworks
-- **TypeScript**: Full TypeScript support with comprehensive types
+- **Real SVG Flags**: 272+ authentic, high-quality SVG flags with accurate colors and designs
+- **Flexible Shapes**: Rectangle, square, circle, rounded, pill with optimized rendering
+- **Perfect Scaling**: Intelligent SVG optimization ensures flags fill containers without distortion
+- **Custom Aspect Ratios**: 1:1, 3:2, 4:3, or any custom ratio with automatic aspect preservation
+- **Any Size**: Responsive sizing that adapts perfectly to any container dimensions
+- **Smart Rendering**: Automatic detection of stroke-based flags (like USA) for proper stripe rendering
+- **Performance**: Static SVG bundling with tree-shaking and lazy loading support
+- **Accessibility**: Built-in `aria-label`, `title`, and role attributes with screen reader support
+- **SSR-Safe**: Works perfectly with Next.js, Vite, and all modern React frameworks
+- **TypeScript**: Full TypeScript support with comprehensive type definitions
 - **Utilities**: Search, filter, and find countries by code, name, or nationality
 
 ## Installation
@@ -246,6 +253,22 @@ const customFlag: FlagProps = {
   size: '48px',
 };
 ```
+
+## Technical Architecture
+
+### SVG Optimization
+
+- **Static Bundle**: All 272+ SVGs are statically imported and bundled for reliable access
+- **Smart Scaling**: Automatic `preserveAspectRatio` optimization based on flag content
+- **Stroke Detection**: Special handling for stroke-based flags (USA stripes, etc.) to prevent distortion
+- **Container Fitting**: Flags intelligently scale to fill containers without cropping
+
+### Performance Features
+
+- **Tree Shaking**: Import only the components and utilities you need
+- **Lazy Loading**: Optional IntersectionObserver-based lazy loading
+- **SVG Caching**: Built-in caching prevents duplicate SVG processing
+- **Bundle Optimization**: Rollup-optimized build with proper externalization
 
 ## Performance Tips
 

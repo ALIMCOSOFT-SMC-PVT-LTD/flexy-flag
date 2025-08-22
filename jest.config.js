@@ -11,6 +11,9 @@ module.exports = {
       },
     ],
   },
+  moduleNameMapper: {
+    '\\.svg$': 'jest-svg-transformer',
+  },
   testMatch: ['**/__tests__/**/*.(ts|tsx)', '**/*.(test|spec).(ts|tsx)'],
   collectCoverageFrom: ['src/**/*.(ts|tsx)', '!src/**/*.d.ts', '!src/index.ts'],
 };
