@@ -1,6 +1,6 @@
 import { countries } from '../data/countries';
 import { Country } from '../types';
-import { loadFlagSvg } from './flagLoader';
+import { loadFlagSvg } from './dynamicFlagLoader';
 
 /**
  * Retrieves the complete list of all available countries with their metadata.

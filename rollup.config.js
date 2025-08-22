@@ -1,9 +1,7 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
-import { string } from 'rollup-plugin-string';
 import dts from 'rollup-plugin-dts';
-import copy from 'rollup-plugin-copy';
 import { readFileSync } from 'fs';
 
 const packageJson = JSON.parse(readFileSync('./package.json', 'utf8'));
@@ -31,16 +29,18 @@ export default [
         include: /node_modules/,
         exclude: ['react', 'react-dom'],
       }),
-      string({
-        include: ['**/*.svg'],
-      }),
+      // SVGs are now loaded dynamically, not bundled
+      // string({
+      //   include: ['**/*.svg'],
+      // }),
       typescript({
         tsconfig: './tsconfig.json',
         exclude: ['**/*.test.ts', '**/*.test.tsx', '**/*.stories.tsx'],
       }),
-      copy({
-        targets: [{ src: 'src/assets', dest: 'dist' }],
-      }),
+      // Assets are now hosted externally, not copied to dist
+      // copy({
+      //   targets: [{ src: 'src/assets', dest: 'dist' }],
+      // }),
     ],
     external: ['react', 'react-dom'],
   },

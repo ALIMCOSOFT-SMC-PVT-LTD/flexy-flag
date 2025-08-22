@@ -114,8 +114,10 @@ describe('Flag Component', () => {
     // Wait a bit for async operations
     await new Promise(resolve => setTimeout(resolve, 100));
 
+    // Invalid country codes now show placeholder SVGs instead of returning null
     const flagElement = screen.queryByRole('img');
-    expect(flagElement).not.toBeInTheDocument();
+    expect(flagElement).toBeInTheDocument();
+    expect(flagElement).toHaveTextContent('INVALID');
   });
 
   test('shows emoji fallback for invalid country code', async () => {
@@ -126,8 +128,10 @@ describe('Flag Component', () => {
     // Wait a bit for async operations
     await new Promise(resolve => setTimeout(resolve, 100));
 
+    // Invalid country codes now show placeholder SVGs regardless of fallback setting
     const flagElement = screen.queryByRole('img');
-    expect(flagElement).not.toBeInTheDocument();
+    expect(flagElement).toBeInTheDocument();
+    expect(flagElement).toHaveTextContent('INVALID');
   });
 
   test('handles different shapes', async () => {

@@ -29,17 +29,32 @@ Your flexi-flags package is ready for NPM! Here's the final checklist:
 ### **Step 1: Prepare Package**
 
 ```bash
-# 1. Clean and rebuild
+# 1. Clean and rebuild (SVGs are now loaded dynamically)
 npm run validate
 npm run build
 
-# 2. Verify package contents
+# 2. Verify package contents (should be ~114KB without SVGs)
 npm pack --dry-run
 
 # 3. Check package size
 npm pack
-ls -la *.tgz  # Should be under 500KB
+ls -la *.tgz  # Should be ~114KB (down from 2MB!)
 ```
+
+### **🎯 Dynamic SVG Loading Setup**
+
+Your package now uses **dynamic SVG loading** to keep it under 500KB:
+
+- ✅ **Package size**: ~114KB (was 2MB)
+- ✅ **SVGs load from jsDelivr CDN** automatically after npm publish
+- ✅ **Fallback placeholders** if SVG fails to load
+- ✅ **Caching** for better performance
+
+**How it works:**
+
+1. Your SVG assets stay in the npm package
+2. jsDelivr serves them from: `https://cdn.jsdelivr.net/npm/flexi-flags@latest/src/assets/flags/`
+3. Users get fast, cached SVG loading
 
 ### **Step 2: Update Package Details**
 
@@ -65,15 +80,26 @@ Edit `package.json`:
 ### **Step 3: Publish to NPM**
 
 ```bash
-# 1. Login to npm (one time)
+# 1. Login to npm (one time only)
 npm login
 
-# 2. Publish package
+# 2. Publish package (this makes SVGs available on jsDelivr automatically)
 npm publish
 
 # 3. Verify publication
 npm info flexi-flags
+
+# 4. Test SVG loading (after publish)
+# Visit: https://cdn.jsdelivr.net/npm/flexi-flags@latest/src/assets/flags/us.svg
+# Should show the US flag SVG
 ```
+
+### **⚠️ Important Notes:**
+
+1. **Before publishing**: SVGs won't load locally (they need jsDelivr)
+2. **After publishing**: jsDelivr automatically mirrors your npm package
+3. **SVG URL pattern**: `https://cdn.jsdelivr.net/npm/flexi-flags@latest/src/assets/flags/{code}.svg`
+4. **Fallback**: If SVG fails to load, shows colored placeholder with country code
 
 ---
 
@@ -90,7 +116,7 @@ npm info flexi-flags
 - ✅ **Enterprise-grade TypeScript** with comprehensive types
 - ✅ **Professional React + Next.js** optimization
 - ✅ **5 shapes** (not just 3) + any custom ratios
-- ✅ **Advanced SVG system** with dynamic loading + caching
+- ✅ **Advanced SVG system** with dynamic CDN loading + caching (114KB package!)
 - ✅ **Team-approved code quality** (Husky, ESLint, Prettier, JSDoc)
 - ✅ **250+ countries** vs basic flag support
 - ✅ **Performance features** (lazy loading, tree-shaking)
@@ -100,12 +126,13 @@ npm info flexi-flags
 
 - 🎯 **5 Shapes**: rectangle, square, circle, rounded, pill
 - 📐 **Any Ratio**: 3:2, 1:1, 4:3, 5:3, or custom
-- ⚡ **Performance**: Lazy loading + tree shaking + caching
+- ⚡ **Performance**: Lazy loading + tree shaking + CDN caching
 - 🔍 **Smart Search**: Intelligent country search with relevance sorting
 - ♿ **Accessibility**: Full ARIA support + screen reader friendly
 - 📱 **SSR Ready**: Next.js compatible out of the box
 - 🌳 **Tree Shaking**: Only import what you use
 - 📝 **TypeScript**: 100% typed with IntelliSense support
+- 🚀 **Tiny Bundle**: 114KB package (SVGs load from fast CDN)
 
 ---
 

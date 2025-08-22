@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FlagProps } from '../types';
-import { getFlagSvg, getCountryByCode } from '../utils/flagUtils';
+import { getCountryByCode } from '../utils/flagUtils';
+import { loadFlagSvg } from '../utils/dynamicFlagLoader';
 
 export const Flag: React.FC<FlagProps> = ({
   code,
@@ -25,7 +26,7 @@ export const Flag: React.FC<FlagProps> = ({
   // Load SVG content asynchronously
   useEffect(() => {
     if (isVisible) {
-      getFlagSvg(code.toLowerCase())
+      loadFlagSvg(code.toLowerCase())
         .then(svg => {
           setSvgContent(svg);
           setHasError(false);
