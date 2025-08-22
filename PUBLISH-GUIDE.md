@@ -2,7 +2,7 @@
 
 ## ✅ **Pre-Publish Checklist**
 
-Your flexi-flags package is ready for NPM! Here's the final checklist:
+Your flexy-flag package is ready for NPM! Here's the final checklist:
 
 ### **✅ Development Complete**
 
@@ -53,7 +53,7 @@ Your package now uses **dynamic SVG loading** to keep it under 500KB:
 **How it works:**
 
 1. Your SVG assets stay in the npm package
-2. jsDelivr serves them from: `https://cdn.jsdelivr.net/npm/flexi-flags@latest/src/assets/flags/`
+2. jsDelivr serves them from: `https://cdn.jsdelivr.net/npm/flexy-flag@latest/src/assets/flags/`
 3. Users get fast, cached SVG loading
 
 ### **Step 2: Update Package Details**
@@ -62,18 +62,18 @@ Edit `package.json`:
 
 ```json
 {
-  "name": "flexi-flags", // Or your chosen name
+  "name": "flexy-flag", // Or your chosen name
   "version": "1.0.0", // Start with 1.0.0 for first release
   "description": "Professional country flags with customizable shapes, sizes, and TypeScript support",
   "author": "Your Name <your.email@example.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/flexi-flags.git"
+    "url": "https://github.com/yourusername/flexy-flag.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/flexi-flags/issues"
+    "url": "https://github.com/yourusername/flexy-flag/issues"
   },
-  "homepage": "https://github.com/yourusername/flexi-flags#readme"
+  "homepage": "https://github.com/yourusername/flexy-flag#readme"
 }
 ```
 
@@ -87,10 +87,10 @@ npm login
 npm publish
 
 # 3. Verify publication
-npm info flexi-flags
+npm info flexy-flag
 
 # 4. Test SVG loading (after publish)
-# Visit: https://cdn.jsdelivr.net/npm/flexi-flags@latest/src/assets/flags/us.svg
+# Visit: https://cdn.jsdelivr.net/npm/flexy-flag@latest/src/assets/flags/us.svg
 # Should show the US flag SVG
 ```
 
@@ -98,7 +98,7 @@ npm info flexi-flags
 
 1. **Before publishing**: SVGs won't load locally (they need jsDelivr)
 2. **After publishing**: jsDelivr automatically mirrors your npm package
-3. **SVG URL pattern**: `https://cdn.jsdelivr.net/npm/flexi-flags@latest/src/assets/flags/{code}.svg`
+3. **SVG URL pattern**: `https://cdn.jsdelivr.net/npm/flexy-flag@latest/src/assets/flags/{code}.svg`
 4. **Fallback**: If SVG fails to load, shows colored placeholder with country code
 
 ---
@@ -141,13 +141,13 @@ npm info flexi-flags
 ### **Installation (after publish):**
 
 ```bash
-npm install flexi-flags
+npm install flexy-flag
 ```
 
 ### **Usage:**
 
 ```tsx
-import { Flag, getAllCountries, searchCountries } from 'flexi-flags';
+import { Flag, getAllCountries, searchCountries } from 'flexy-flag';
 
 // Any shape, any size, any ratio
 <Flag code="US" shape="circle" size="64px" ratio="1:1" />
@@ -172,6 +172,6 @@ You've built a **professional-grade, enterprise-ready** NPM package that:
 - ✅ **Includes comprehensive testing**
 - ✅ **Ready for production use**
 
-Your flexi-flags package is now ready for NPM publication! 🚀
+Your flexy-flag package is now ready for NPM publication! 🚀
 
 Run `npm publish` when ready to share it with the world! 🌍

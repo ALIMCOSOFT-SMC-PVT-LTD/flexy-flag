@@ -7,7 +7,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const flagsPackageDir = 'flexi-flags-assets';
+const flagsPackageDir = 'flexy-flag-assets';
 const sourceDir = 'src/assets/flags';
 
 // Create package directory
@@ -31,9 +31,9 @@ svgFiles.forEach(file => {
 
 // Create package.json for flags package
 const flagsPackageJson = {
-  name: 'flexi-flags-assets',
+  name: 'flexy-flag-assets',
   version: '1.0.0',
-  description: 'SVG flag assets for flexi-flags library',
+  description: 'SVG flag assets for flexy-flag library',
   main: 'index.js',
   files: ['flags/*.svg'],
   license: 'MIT',

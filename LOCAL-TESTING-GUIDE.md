@@ -1,23 +1,23 @@
-# How to Test `flexi-flags` in a Local React Project
+# How to Test `flexy-flag` in a Local React Project
 
-This guide will walk you through setting up a local React project to test your `flexi-flags` package without publishing it to npm. This process, known as "linking," allows you to use your package in another project on your machine as if it were installed from the registry.
+This guide will walk you through setting up a local React project to test your `flexy-flag` package without publishing it to npm. This process, known as "linking," allows you to use your package in another project on your machine as if it were installed from the registry.
 
 ## Prerequisites
 
 - Node.js (v18+ recommended)
-- Your `flexi-flags` project folder.
+- Your `flexy-flag` project folder.
 - A terminal or command prompt.
 
 ---
 
-## Step 1: Build and Link Your `flexi-flags` Package
+## Step 1: Build and Link Your `flexy-flag` Package
 
 First, you need to build your package and then create a global link to it.
 
 1.  **Navigate to your package directory:**
 
     ```bash
-    cd /Users/afaq/Documents/OPENSOURCE/flexi-flags/
+    cd /Users/afaq/Documents/OPENSOURCE/flexy-flag/
     ```
 
 2.  **Install dependencies and build the project:**
@@ -41,9 +41,9 @@ First, you need to build your package and then create a global link to it.
 
 ## Step 2: Create a New React Test Project
 
-Now, let's create a separate, clean React project to test `flexi-flags`. We'll use Vite for a fast and modern setup.
+Now, let's create a separate, clean React project to test `flexy-flag`. We'll use Vite for a fast and modern setup.
 
-1.  **Navigate to a different directory** (e.g., your Desktop or a `projects` folder). Do **not** create this inside your `flexi-flags` folder.
+1.  **Navigate to a different directory** (e.g., your Desktop or a `projects` folder). Do **not** create this inside your `flexy-flag` folder.
 
     ```bash
     cd ~/Desktop
@@ -63,34 +63,34 @@ Now, let's create a separate, clean React project to test `flexi-flags`. We'll u
 
 ---
 
-## Step 3: Link `flexi-flags` to Your Test Project
+## Step 3: Link `flexy-flag` to Your Test Project
 
 Now, connect the global link you created in Step 1 to your new test project.
 
 1.  **Inside the `my-flag-test-app` directory, run:**
     ```bash
-    npm link flexi-flags
+    npm link flexy-flag
     ```
-    This command creates a symbolic link inside your test app's `node_modules` folder that points to your local `flexi-flags` project. Your test app will now resolve `import ... from 'flexi-flags'` to your local code.
+    This command creates a symbolic link inside your test app's `node_modules` folder that points to your local `flexy-flag` project. Your test app will now resolve `import ... from 'flexy-flag'` to your local code.
 
 ---
 
-## Step 4: Use `flexi-flags` in Your React App
+## Step 4: Use `flexy-flag` in Your React App
 
-You can now import and use your components and functions from `flexi-flags` just like any other npm package.
+You can now import and use your components and functions from `flexy-flag` just like any other npm package.
 
 1.  **Open `src/App.tsx`** in your `my-flag-test-app` project.
 2.  **Replace its content with the following code** to test various features:
 
     ```tsx
     import './App.css';
-    // This import will now resolve to your local flexi-flags project
-    import { Flag } from 'flexi-flags';
+    // This import will now resolve to your local flexy-flag project
+    import { Flag } from 'flexy-flag';
 
     function App() {
       return (
         <div className='App'>
-          <h1>Flexi-Flags Local Test</h1>
+          <h1>flexy-flag Local Test</h1>
           <p>
             If you see the flags below, your local package is linked and working
             correctly!
@@ -158,7 +158,7 @@ Start the development server to see your work.
     npm run dev
     ```
 
-2.  **Open your browser** to the URL provided (usually `http://localhost:5173`). You should see your React app displaying the flags from your local `flexi-flags` package.
+2.  **Open your browser** to the URL provided (usually `http://localhost:5173`). You should see your React app displaying the flags from your local `flexy-flag` package.
 
 ---
 
@@ -201,10 +201,10 @@ Once you're done testing, you can remove the links to clean up your environment.
 1.  **In your test app (`my-flag-test-app`):**
 
     ```bash
-    npm unlink flexi-flags
+    npm unlink flexy-flag
     ```
 
-2.  **In your package (`flexi-flags`):**
+2.  **In your package (`flexy-flag`):**
     ```bash
     npm unlink
     ```

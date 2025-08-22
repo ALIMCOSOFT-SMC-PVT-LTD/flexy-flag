@@ -40,7 +40,7 @@ src/assets/flags/
 ### Basic Usage (Sync - Current)
 
 ```tsx
-import { Flag } from 'flexi-flags';
+import { Flag } from 'flexy-flag';
 
 // Works immediately with embedded flags + placeholders
 <Flag code="US" size="48px" />
@@ -50,7 +50,7 @@ import { Flag } from 'flexi-flags';
 ### Advanced Usage (Async - With Real SVGs)
 
 ```tsx
-import { getFlagSvg, preloadFlags } from 'flexi-flags';
+import { getFlagSvg, preloadFlags } from 'flexy-flag';
 
 // Load individual flag
 const usSvg = await getFlagSvg('US');

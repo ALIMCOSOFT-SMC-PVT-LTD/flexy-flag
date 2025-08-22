@@ -1,6 +1,6 @@
-# Flexi-Flags
+# flexy-flag
 
-[![npm version](https://badge.fury.io/js/flexi-flags.svg)](https://badge.fury.io/js/flexi-flags) [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Downloads](https://img.shields.io/npm/dw/flexi-flags.svg)](https://www.npmjs.com/package/flexi-flags)
+[![npm version](https://badge.fury.io/js/flexy-flag.svg)](https://badge.fury.io/js/flexy-flag) [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Downloads](https://img.shields.io/npm/dw/flexy-flag.svg)](https://www.npmjs.com/package/flexy-flag)
 
 A modern, flexible React component library for displaying country flags using authentic, high-quality SVG assets. Features 272+ real flag designs with intelligent scaling, shape transformations, and perfect rendering across all container sizes.
 
@@ -29,7 +29,7 @@ A modern, flexible React component library for displaying country flags using au
 ## Installation
 
 ```bash
-npm install flexi-flags
+npm install flexy-flag
 ```
 
 For React projects, ensure you have React 16+ installed.
@@ -38,7 +38,7 @@ For React projects, ensure you have React 16+ installed.
 
 ```tsx
 import React from 'react';
-import { Flag } from 'flexi-flags';
+import { Flag } from 'flexy-flag';
 
 const App = () => (
   <div>
@@ -109,7 +109,7 @@ export default App;
 ```tsx
 import dynamic from 'next/dynamic';
 
-const Flag = dynamic(() => import('flexi-flags').then(mod => mod.Flag), {
+const Flag = dynamic(() => import('flexy-flag').then(mod => mod.Flag), {
   ssr: false,
 });
 
@@ -122,7 +122,7 @@ export default function MyPage() {
 
 ```tsx
 import { useState } from 'react';
-import { Flag, searchCountries } from 'flexi-flags';
+import { Flag, searchCountries } from 'flexy-flag';
 
 function CountryPicker() {
   const [query, setQuery] = useState('');
@@ -174,7 +174,7 @@ import {
   getCountryByCode,
   searchCountries,
   flagExists,
-} from 'flexi-flags';
+} from 'flexy-flag';
 
 // Get all countries
 const allCountries = getAllCountries();
@@ -218,7 +218,7 @@ Add CSS animations to create engaging flag interactions:
 ### Integration with Form Libraries
 
 ```tsx
-import { Flag, getAllCountries } from 'flexi-flags';
+import { Flag, getAllCountries } from 'flexy-flag';
 import Select from 'react-select';
 
 const countryOptions = getAllCountries().map(country => ({
@@ -242,10 +242,10 @@ const CustomOption = ({ innerProps, label, data }) => (
 
 ## TypeScript Support
 
-Flexi-Flags is built with TypeScript and includes comprehensive type definitions:
+flexy-flag is built with TypeScript and includes comprehensive type definitions:
 
 ```tsx
-import type { FlagProps, FlagShape, Country } from 'flexi-flags';
+import type { FlagProps, FlagShape, Country } from 'flexy-flag';
 
 const customFlag: FlagProps = {
   code: 'us',
@@ -315,4 +315,4 @@ npm run build
 npm run dev
 ```
 
-For more examples and documentation, visit our [GitHub repository](https://github.com/yourusername/flexi-flags).
+For more examples and documentation, visit our [GitHub repository](https://github.com/yourusername/flexy-flag).

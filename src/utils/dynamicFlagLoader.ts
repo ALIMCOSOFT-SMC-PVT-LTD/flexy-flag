@@ -15,7 +15,7 @@ const svgCache = new Map<string, string>();
  * You can host these on GitHub Pages, jsDelivr, or any CDN.
  */
 const CDN_BASE_URL =
-  'https://cdn.jsdelivr.net/npm/flexi-flags@latest/src/assets/flags';
+  'https://cdn.jsdelivr.net/npm/flexy-flag@latest/src/assets/flags';
 
 /**
  * Loads SVG flag content from CDN with caching support.

@@ -1,5 +1,5 @@
 {
-  "name": "flexi-flags",
+  "name": "flexy-flag",
   "version": "1.0.0",
   "description": "Flexible, accessible country flags for React with customizable shapes, sizes, and aspect ratios",
   "main": "dist/index.js",
@@ -43,16 +43,16 @@
     "shapes",
     "accessibility"
   ],
-  "author": "Your Name",
+  "author": "Hassan Sattar <i.hassansattar@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/flexi-flags.git"
+    "url": "https://github.com/ALIMCOSOFT-SMC-PVT-LTD/flexy-flag"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/flexi-flags/issues"
+    "url": "https://github.com/ALIMCOSOFT-SMC-PVT-LTD/flexy-flag/issues"
   },
-  "homepage": "https://github.com/yourusername/flexi-flags#readme",
+  "homepage": "https://github.com/ALIMCOSOFT-SMC-PVT-LTD/flexy-flag#readme",
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"

@@ -80,7 +80,7 @@ The flag loader will:
 ### Example Usage
 
 ```typescript
-import { getFlagSvg, preloadFlags } from 'flexi-flags';
+import { getFlagSvg, preloadFlags } from 'flexy-flag';
 
 // Load single flag (async)
 const usSvg = await getFlagSvg('US');

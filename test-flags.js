@@ -9,7 +9,7 @@ const {
   getCountryByCode,
 } = require('./dist/index.js');
 
-console.log('🏁 Testing Flexi-Flags Package\n');
+console.log('🏁 Testing flexy-flag Package\n');
 
 // Test 1: Check if common flags exist
 console.log('1. Testing Flag Existence:');

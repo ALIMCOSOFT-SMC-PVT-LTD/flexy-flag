@@ -1,6 +1,6 @@
-# Contributing to Flexi-Flags
+# Contributing to flexy-flag
 
-Thank you for your interest in contributing to Flexi-Flags! This document provides guidelines and information for contributors.
+Thank you for your interest in contributing to flexy-flag! This document provides guidelines and information for contributors.
 
 ## 📋 Table of Contents
 
@@ -22,8 +22,8 @@ By participating in this project, you agree to abide by our Code of Conduct. Be 
 1. **Fork the repository** on GitHub
 2. **Clone your fork** locally:
    ```bash
-   git clone https://github.com/yourusername/flexi-flags.git
-   cd flexi-flags
+   git clone https://github.com/yourusername/flexy-flag.git
+   cd flexy-flag
    ```
 3. **Install dependencies**:
    ```bash
