@@ -12,10 +12,9 @@ const svgCache = new Map<string, string>();
 
 /**
  * Base URL for flag SVGs on CDN.
- * You can host these on GitHub Pages, jsDelivr, or any CDN.
+ * Hosted on Vercel for ultra-fast global delivery and smaller package size.
  */
-const CDN_BASE_URL =
-  'https://cdn.jsdelivr.net/npm/@alimcosoft/flexy-flag@latest/src/assets/flags';
+const CDN_BASE_URL = 'https://flexy-flag.vercel.app/flags';
 
 /**
  * Loads SVG flag content from CDN with caching support.

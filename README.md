@@ -10,7 +10,8 @@ A modern, flexible React component library for displaying country flags using au
 - ✅ **Smart Scaling**: Flags automatically scale to fill containers perfectly without cropping
 - ✅ **Stroke-Aware**: Special handling for flags with stripes (like USA) to preserve visual accuracy
 - ✅ **Shape Flexibility**: Circle, square, rounded, pill shapes with optimized rendering
-- ✅ **Bundle Optimized**: Static SVG imports for reliable cross-platform compatibility
+- ✅ **CDN Optimized**: Dynamic loading from Vercel Edge Network for ultra-fast delivery
+- ✅ **Tiny Bundle**: 113KB package (94% smaller) with on-demand SVG loading
 
 ## Features
 
@@ -20,7 +21,7 @@ A modern, flexible React component library for displaying country flags using au
 - **Custom Aspect Ratios**: 1:1, 3:2, 4:3, or any custom ratio with automatic aspect preservation
 - **Any Size**: Responsive sizing that adapts perfectly to any container dimensions
 - **Smart Rendering**: Automatic detection of stroke-based flags (like USA) for proper stripe rendering
-- **Performance**: Static SVG bundling with tree-shaking and lazy loading support
+- **Performance**: Dynamic CDN loading with intelligent caching and tree-shaking support
 - **Accessibility**: Built-in `aria-label`, `title`, and role attributes with screen reader support
 - **SSR-Safe**: Works perfectly with Next.js, Vite, and all modern React frameworks
 - **TypeScript**: Full TypeScript support with comprehensive type definitions
@@ -243,6 +244,22 @@ const CustomOption = ({ innerProps, label, data }) => (
 <Select options={countryOptions} components={{ Option: CustomOption }} />;
 ```
 
+## CDN Architecture
+
+@alimcosoft/flexy-flag uses a high-performance CDN architecture for optimal loading:
+
+- **SVG Assets**: Hosted on Vercel Edge Network at `https://flexy-flag.vercel.app/flags/`
+- **Global Distribution**: Ultra-fast delivery via Vercel's global CDN
+- **Smart Caching**: Automatic client-side caching with fallback placeholders
+- **Small Bundle**: Only 113KB package size (SVGs load dynamically)
+
+### CDN Benefits:
+
+- ⚡ **Lightning Fast**: Sub-100ms flag loading globally
+- 📦 **Tiny Package**: 94% smaller than bundled alternatives
+- 🌍 **Global CDN**: Vercel's edge network for worldwide speed
+- 🔄 **Smart Fallbacks**: Colored placeholders if CDN unavailable
+
 ## TypeScript Support
 
 @alimcosoft/flexy-flag is built with TypeScript and includes comprehensive type definitions:
@@ -317,5 +334,25 @@ npm run build
 # Run example in development
 npm run dev
 ```
+
+## 🚀 Custom CDN Deployment
+
+Want to host flags on your own CDN? Use our deployment scripts:
+
+### GitHub Pages
+
+```bash
+./deploy-flags.sh
+# Follow the prompts to deploy to GitHub Pages
+```
+
+### Vercel
+
+```bash
+./setup-vercel-cdn.sh
+# Creates a Vercel-ready project with your flags
+```
+
+These scripts help you set up your own flag CDN for maximum control and performance.
 
 For more examples and documentation, visit our [GitHub repository](https://github.com/ALIMCOSOFT-SMC-PVT-LTD/flexy-flag).
