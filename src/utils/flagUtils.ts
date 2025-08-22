@@ -5,7 +5,7 @@ import { loadFlagSvg } from './dynamicFlagLoader';
 /**
  * Retrieves the complete list of all available countries with their metadata.
  *
- * This function returns all countries supported by the flexy-flag package,
+ * This function returns all countries supported by the @alimcosoft/flexy-flag package,
  * including their ISO codes, full names, and emoji representations where available.
  *
  * @example
