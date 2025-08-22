@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
-import { getAllCountries, searchCountries } from 'flexy-flag';
+import { getAllCountries, searchCountries } from '@alimcosoft/flexy-flag';
 
 // Dynamic import for SSR safety
-const Flag = dynamic(() => import('flexy-flag').then(mod => mod.Flag), {
-  ssr: false,
-});
+const Flag = dynamic(
+  () => import('@alimcosoft/flexy-flag').then(mod => mod.Flag),
+  {
+    ssr: false,
+  }
+);
 
 /**
  * Next.js example component demonstrating flexy-flag usage.

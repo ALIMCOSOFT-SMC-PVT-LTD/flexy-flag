@@ -1,5 +1,5 @@
 {
-  "name": "flexy-flag",
+  "name": "@alimcosoft/flexy-flag",
   "version": "1.0.0",
   "description": "Flexible, accessible country flags for React with customizable shapes, sizes, and aspect ratios",
   "main": "dist/index.js",
