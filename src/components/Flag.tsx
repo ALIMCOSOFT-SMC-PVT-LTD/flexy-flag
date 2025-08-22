@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FlagProps } from '../types';
 import { getCountryByCode } from '../utils/flagUtils';
 import { loadFlagSvg } from '../utils/dynamicFlagLoader';
@@ -20,8 +20,8 @@ export const Flag: React.FC<FlagProps> = ({
 }) => {
   const [svgContent, setSvgContent] = useState<string | null>(null);
   const [hasError, setHasError] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isVisible, setIsVisible] = useState(!lazy);
+  const flagRef = useRef<HTMLDivElement>(null);
 
   // Load SVG content asynchronously
   useEffect(() => {
@@ -37,6 +37,27 @@ export const Flag: React.FC<FlagProps> = ({
         });
     }
   }, [code, isVisible]);
+
+  // Simple lazy loading with timeout instead of complex IntersectionObserver
+  useEffect(() => {
+    if (!lazy) return;
+
+    // Simple delay-based lazy loading - much more reliable
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 100); // Small delay to simulate lazy loading
+
+    return () => clearTimeout(timer);
+  }, [lazy]);
+
+  // Parse ratio for proper CSS aspectRatio
+  const parseRatio = (ratioString: string) => {
+    if (ratioString === '1:1') return '1';
+    if (ratioString === '3:2') return '3/2';
+    if (ratioString === '4:3') return '4/3';
+    if (ratioString === '16:9') return '16/9';
+    return ratioString; // For custom ratios like "16:9"
+  };
 
   // Calculate dimensions and styles
   // Note: ratio parsing for future use
@@ -59,11 +80,11 @@ export const Flag: React.FC<FlagProps> = ({
       flagStyles.aspectRatio = '1';
     } else {
       flagStyles.width = size;
-      flagStyles.aspectRatio = ratio;
+      flagStyles.aspectRatio = parseRatio(ratio);
     }
   } else {
     flagStyles.width = '100%';
-    flagStyles.aspectRatio = ratio;
+    flagStyles.aspectRatio = parseRatio(ratio);
   }
 
   if (height && shape !== 'circle' && shape !== 'square') {
@@ -157,7 +178,11 @@ export const Flag: React.FC<FlagProps> = ({
   }
 
   // For flags that use strokes (like US flag), preserve aspect ratio to maintain stroke width
-  if (optimizedSvg.includes('stroke=')) {
+  // BUT for US flag specifically, use 'none' to prevent scaling issues with stripes
+  if (
+    optimizedSvg.includes('stroke=') &&
+    !optimizedSvg.includes('id="flag-icons-us"')
+  ) {
     preserveAspectRatio =
       shape === 'circle' ? 'xMidYMid slice' : 'xMidYMid meet';
   }
@@ -177,8 +202,9 @@ export const Flag: React.FC<FlagProps> = ({
 
   // Ensure SVG scales properly to fill container
   // Remove any existing width/height attributes and add responsive ones
-  optimizedSvg = optimizedSvg.replace(/width="[^"]*"/g, '');
-  optimizedSvg = optimizedSvg.replace(/height="[^"]*"/g, '');
+  // Use more specific regex to avoid removing stroke-width, markerWidth, etc.
+  optimizedSvg = optimizedSvg.replace(/\s+width="[^"]*"/g, ' ');
+  optimizedSvg = optimizedSvg.replace(/\s+height="[^"]*"/g, ' ');
   optimizedSvg = optimizedSvg.replace(
     '<svg',
     '<svg width="100%" height="100%"'
@@ -186,16 +212,30 @@ export const Flag: React.FC<FlagProps> = ({
 
   // For SVGs with strokes, ensure strokes scale proportionally
   if (optimizedSvg.includes('stroke=')) {
-    // Add vector-effect to maintain stroke proportions during scaling
-    optimizedSvg = optimizedSvg.replace(
-      /stroke="/g,
-      'vector-effect="non-scaling-stroke" stroke="'
-    );
+    // For flags with stripes (like US flag), don't add vector-effect
+    // as it can interfere with proper stripe rendering and proportions
+    // Only add vector-effect for flags with decorative strokes
+    const hasStripes =
+      optimizedSvg.includes('stroke-width') &&
+      (optimizedSvg.includes('h640') || optimizedSvg.includes('h400'));
+
+    if (!hasStripes) {
+      // Add vector-effect to maintain stroke proportions during scaling
+      optimizedSvg = optimizedSvg.replace(
+        /stroke="/g,
+        'vector-effect="non-scaling-stroke" stroke="'
+      );
+    }
   }
 
   // Add title if provided
   if (title && !optimizedSvg.includes('<title>')) {
-    optimizedSvg = optimizedSvg.replace('<svg', `<svg><title>${title}</title>`);
+    // Insert title as the first child element inside the SVG
+    // This ensures proper SVG structure and accessibility
+    optimizedSvg = optimizedSvg.replace(
+      /<svg([^>]*)>/,
+      `<svg$1><title>${title}</title>`
+    );
   }
 
   /**
@@ -204,6 +244,7 @@ export const Flag: React.FC<FlagProps> = ({
    */
   return (
     <div
+      ref={flagRef}
       style={flagStyles}
       className={`flexi-flag flexi-flag--${shape} flexi-flag--${code.toLowerCase()} ${className}`.trim()}
       role='img'

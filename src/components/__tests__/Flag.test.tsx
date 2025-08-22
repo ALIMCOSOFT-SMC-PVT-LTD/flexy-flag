@@ -163,8 +163,25 @@ describe('Flag Component', () => {
 
       await waitFor(() => {
         const flagElement = screen.getByRole('img');
-        // Check that the element has the aspect ratio in its style attribute
-        expect(flagElement.style.aspectRatio).toBe(ratio);
+
+        // Get the expected CSS aspectRatio value based on the input ratio
+        let expectedAspectRatio: string;
+        switch (ratio) {
+          case '1:1':
+            expectedAspectRatio = '1';
+            break;
+          case '3:2':
+            expectedAspectRatio = '3/2';
+            break;
+          case '4:3':
+            expectedAspectRatio = '4/3';
+            break;
+          default:
+            expectedAspectRatio = ratio;
+        }
+
+        // Check that the element has the correct aspect ratio in its style attribute
+        expect(flagElement.style.aspectRatio).toBe(expectedAspectRatio);
       });
 
       unmount();
